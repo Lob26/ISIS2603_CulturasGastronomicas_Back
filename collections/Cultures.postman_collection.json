@@ -1,0 +1,527 @@
+{
+	"info": {
+		"_postman_id": "9128717d-32e6-4e67-bc82-7608fae5670f",
+		"name": "Cultures",
+		"description": "A set of postman tets over `GastronomicCulture` (hereinafter referred to as `Culture`) URL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26276621"
+	},
+	"item": [
+		{
+			"name": "Create OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"culture_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", () => pm.response.to.have.status(201));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Mediterranea\",\r\n    \"description\":\"Lo que une todas las tradiciones de cocina mediterránea son sus ingredientes, que provienen del periodo de inicio de la gastronomía en la antigua Mesopotamia.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/culture",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					]
+				},
+				"description": "Create a `Culture` without any sort of problems or lack of data.\n\n**Pre:** A Json with all data neccessary to create a `GastronomicCultureDTO`\n\n**Post:** `status:` 201"
+			},
+			"response": []
+		},
+		{
+			"name": "Create NULL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\",() => {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.apierror.message).to.eql(\"Blank name\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\":\"Lo que une todas las tradiciones de cocina mediterránea son sus ingredientes, que provienen del periodo de inicio de la gastronomía en la antigua Mesopotamia.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/culture",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					]
+				},
+				"description": "Attemps to create a `Culture` with a `null` name\n\n**Pre:** A Json with all necessary `GastronomicCultureDTO`'s data but the name\n\n**Post:** `status:` 412; `apiError.message:` Blank name"
+			},
+			"response": []
+		},
+		{
+			"name": "Create EMPTY",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\",() => {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.apierror.message).to.eql(\"Blank name\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"\",\r\n    \"description\":\"Lo que une todas las tradiciones de cocina mediterránea son sus ingredientes, que provienen del periodo de inicio de la gastronomía en la antigua Mesopotamia.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/culture",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					]
+				},
+				"description": "Attemps to create a `Culture` with an empty name\n\n**Pre:** A Json with all necessary `GastronomicCultureDTO`'s data but the name have an empty string\n\n**Post:** `status:` 412; `apiError.message:` Blank name"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Number of cultures > 0\", () => {\r",
+							"    var data = pm.response.json()\r",
+							"    pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/culture/all",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture",
+						"all"
+					]
+				},
+				"description": "Get all `cultures` stored in the server\n\n**Pre:**`None`\n\n**Post:** List of all `cultures`; `status:` 201"
+			},
+			"response": []
+		},
+		{
+			"name": "Get one OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/culture?id={{culture_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{culture_id}}"
+						}
+					]
+				},
+				"description": "Get a single `culture`\n\n**Pre:** id (Given in query-uri)\n\n**Post:** Full `GastronomicCultureDetailDTO` data"
+			},
+			"response": []
+		},
+		{
+			"name": "Get one NONEXISTENT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));\r",
+							"\r",
+							"pm.test(\"Get expected message\", () => {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.apierror.message).to.eql(\"GASTRONOMIC_CULTURE NOT FOUND\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/culture?id=0",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Attemps to get an invalid `culture`\n\n**Pre:** id=0\n\n**Post:** Post: status: 404; apiError.message: NOT_FOUND"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", ( ) => pm.response.to.have.status(200));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Japonesa\",\r\n    \"description\":\"Las principales características que describen la gastronomía japonesa se podrían definir en tres palabras: sencillez, sabores naturales y refinamiento. La cocina japonesa es un fiel reflejo de una añeja civilización fincada en las tradiciones, de donde se saca la conclusión de que la cocina japonesa constituye un verdadero arte culinario.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/culture?id={{culture_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{culture_id}}"
+						}
+					]
+				},
+				"description": "Edit a `Culture`'s data\n\n**Pre:** id (Given by query-uri), a Json with all data from a `GastronomicCultureDTO`\n\n**Post:** Post: status: 200"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit NULL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", () => pm.response.to.have.status(412));\r",
+							"\r",
+							"pm.test(\"Get expected error message\",() => {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.apierror.message).to.eql(\"Blank name\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\":\"Lorem ipsum BLANK\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/culture?id={{culture_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{culture_id}}"
+						}
+					]
+				},
+				"description": "Attemps to update a `Culture` with a `null` name\n\n**Pre:** id (Given by query-uri), a Json with all necessary `GastronomicCultureDTO`'s data but the name\n\n**Post:** `status:` 412; `apiError.message:` Blank name"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit EMPTY",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", () => pm.response.to.have.status(412));\r",
+							"\r",
+							"pm.test(\"Get expected error message\",() => {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.apierror.message).to.eql(\"Blank name\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"\",\r\n    \"description\":\"Lorem ipsum BLANK\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/culture?id={{culture_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{culture_id}}"
+						}
+					]
+				},
+				"description": "Attemps to update a `Culture` with an empty name\n\n**Pre:** id, (Given by query-uri), a Json with all necessary `GastronomicCultureDTO`'s data but the name have an empty string\n\n**Post:** `status:` 412; `apiError.message:` Blank name"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit NONEXISTENT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));\r",
+							"\r",
+							"pm.test(\"Get expected message\", () => {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.apierror.message).to.eql(\"GASTRONOMIC_CULTURE NOT FOUND\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Japonesa\",\r\n    \"description\":\"Lorem Ipsum japonesa\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/culture?id=0",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Attempts to update an invalid `culture`\n\n**Pre:** id=0\n\n**Post:** Post: status: 404; apiError.message: NOT_FOUND"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete NONEXISTENT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404))\r",
+							"\r",
+							"pm.test(\"Get expected message\", () => {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.apierror.message).to.eql(\"GASTRONOMIC_CULTURE NOT FOUND\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/culture?id=0",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Attempts to delete an invalid `culture`\n\n**Pre:** id=0\n\n**Post:** Post: status: 404; apiError.message: NOT_FOUND"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", () => pm.response.to.have.status(204))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/culture?id={{culture_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{culture_id}}"
+						}
+					]
+				},
+				"description": "Delete a`culture`\n\n**Pre:** id (Given in query-uri)\n\n**Post:**`Status:` 204"
+			},
+			"response": []
+		}
+	]
+}

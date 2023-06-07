@@ -1,0 +1,43 @@
+package co.edu.uniandes.dse.culturasgastronomicas.exceptions;
+
+public enum STR {
+    CULTURE("GASTRONOMIC_CULTURE"),
+    COUNTRY("COUNTRY"),
+    CATEGORY("GASTRONOMIC_CATEGORY"),
+    PRODUCT("REPRESENTATIVE_PRODUCT"),
+    RESTAURANT("RESTAURANT"),
+    M_STAR("MICHELIN_STAR"),
+    RECIPE("RECIPE"),
+    DISH_M("DISH_MULTIMEDIA"),
+    CULTURE_CATEGORY(CULTURE, CATEGORY),
+    CULTURE_COUNTRY(CULTURE, COUNTRY),
+    CULTURE_RECIPE(CULTURE, RECIPE),
+    COUNTRY_CULTURE(COUNTRY, CULTURE),
+    COUNTRY_RESTAURANT(COUNTRY, RESTAURANT),
+    CATEGORY_CULTURE(CATEGORY, CULTURE),
+    CATEGORY_PRODUCT(CATEGORY, PRODUCT),
+    PRODUCT_CATEGORY(PRODUCT, CATEGORY),
+    RESTAURANT_COUNTRY(RESTAURANT, COUNTRY),
+    RESTAURANT_RECIPE(RESTAURANT, RECIPE),
+    RESTAURANT_M_STAR(RESTAURANT, M_STAR),
+    RECIPE_CULTURE(RECIPE, CULTURE),
+    RECIPE_RESTAURANT(RECIPE, RESTAURANT),
+    RECIPE_DISH_M(RECIPE, DISH_M),
+    DISH_M_RECIPE(DISH_M, RECIPE);
+
+    public final String nil;
+    public final String det;
+    public final String rel;
+    private final String msg;
+
+    STR(String s) {
+        msg = s;
+        nil = msg + " IS NULL";
+        det = msg + " ARE NOT ASSOCIATED";
+        rel = msg + " HAVE ASSOCIATIONS";
+    }
+
+    STR(STR c1, STR c2) {this(c1 + "-" + c2);}
+
+    @Override public String toString() {return msg;}
+}

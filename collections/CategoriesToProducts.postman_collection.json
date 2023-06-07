@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "bc188863-2da9-4139-bf72-75515c7ea379",
+		"name": "CategoriesToProducts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25813858"
+	},
+	"item": [
+		{
+			"name": "Solo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/culture",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					]
+				},
+				"description": "Para vaciar el jenkins"
+			},
+			"response": []
+		}
+	]
+}

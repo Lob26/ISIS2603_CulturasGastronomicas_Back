@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "f270f9ae-7116-495f-bf69-91d956668517",
+		"name": "CulturesToCountries",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26276621"
+	},
+	"item": [
+		{
+			"name": "Solo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/culture",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"culture"
+					]
+				},
+				"description": "Para vaciar el jenkins"
+			},
+			"response": []
+		}
+	]
+}
